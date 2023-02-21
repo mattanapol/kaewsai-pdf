@@ -10,15 +10,15 @@ import (
 func main() {
 
 	// Create new PDF generator
-	pdfg, err := wkhtmltopdf.NewPDFGenerator()
+	pdfGenerator, err := wkhtmltopdf.NewPDFGenerator()
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Set global options
-	pdfg.Dpi.Set(300)
-	pdfg.Orientation.Set(wkhtmltopdf.OrientationPortrait)
-	pdfg.Grayscale.Set(true)
+	pdfGenerator.Dpi.Set(300)
+	pdfGenerator.Orientation.Set(wkhtmltopdf.OrientationPortrait)
+	pdfGenerator.Grayscale.Set(true)
 
 	// Create a new input page from an URL
 	page := wkhtmltopdf.NewPage("https://www.inkit.com/blog/print-test-pdf")
@@ -29,16 +29,16 @@ func main() {
 	page.Zoom.Set(0.95)
 
 	// Add to document
-	pdfg.AddPage(page)
+	pdfGenerator.AddPage(page)
 
 	// Create PDF document in internal buffer
-	err = pdfg.Create()
+	err = pdfGenerator.Create()
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Write buffer contents to file on disk
-	err = pdfg.WriteFile("./output/simplesample.pdf")
+	err = pdfGenerator.WriteFile("./output/outputFile.pdf")
 	if err != nil {
 		log.Fatal(err)
 	}
