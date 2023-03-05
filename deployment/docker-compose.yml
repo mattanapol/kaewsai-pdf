@@ -1,0 +1,46 @@
+version: '3'
+name: kaewsai-pdf
+services:
+  mongodb:
+    image: mongo:4.4
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=123456
+      - MONGO_INITDB_DATABASE=kaewsai_pdf
+      - MONGO_INITDB_USERNAME=admin
+      - MONGO_INITDB_PASSWORD=admin
+    volumes:
+      - kaewsai_pdf_mongo:/data/db
+      - ./init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
+
+  api:
+    container_name: api
+    image: kaewsai-pdf-api
+    ports:
+      - 8080:8080
+    build:
+      context: "../"
+      dockerfile: "./deployment/Dockerfile.api"
+    env_file:
+      - "../.env-api"
+  chromium:
+    container_name: chromium
+    image: kaewsai-chromium-app
+    build:
+      context: "../"
+      dockerfile: "./deployment/Dockerfile.chromium-app"
+    env_file:
+      - "../.env-chromium"
+  wkhtmltopdf:
+    container_name: wkhtmltopdf
+    image: kaewsai-wkhtmltopdf-app
+    build:
+      context: "../"
+      dockerfile: "./deployment/Dockerfile.wkhtmltopdf-app"
+    env_file:
+      - "../.env-wk"
+
+volumes:
+  kaewsai_pdf_mongo:

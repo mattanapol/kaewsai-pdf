@@ -9,20 +9,24 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/mattanapol/kaewsai-pdf/internal/persistence/nosql_repos"
 	"github.com/mattanapol/kaewsai-pdf/internal/router"
 	"github.com/mattanapol/kaewsai-pdf/internal/router/health"
+	"github.com/mattanapol/kaewsai-pdf/internal/router/pdf_generator"
 	"github.com/mattanapol/kaewsai-pdf/internal/setting"
 	"go.uber.org/fx"
 )
 
-// @title PIM Service API
+// @title Pdf Generator Service API
 // @version 1.0
-// @description Product information service API
+// @description Pdf Generator Service API
 func main() {
 	// Run server
 	app := fx.New(
 		health.Module,
 		setting.ApiModule,
+		nosql_repos.Module,
+		pdf_generator.Module,
 		fx.Provide(
 			NewServer,
 		),

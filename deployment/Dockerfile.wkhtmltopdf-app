@@ -17,8 +17,8 @@ RUN mkdir /output
 
 COPY ./cmd ./cmd
 COPY ./internal ./internal
-COPY ./config ./config
 RUN go build -o /main ./cmd/wkhtmltopdf-app/
+COPY ./config /config
 
 # ##
 # ## Deploy
@@ -28,7 +28,9 @@ FROM gcr.io/distroless/base-debian11 AS app
 WORKDIR /
 
 COPY --from=build ["/main", "/"]
+COPY --from=build ["/config", "/config"]
 COPY --from=build --chown=nonroot:nonroot ["/output", "/output"]
+COPY --from=build ["/etc/fonts/fonts.conf", "/etc/fonts/fonts.conf"]
 COPY --from=build ["/usr/local/bin/wkhtmltopdf", "/usr/local/bin/wkhtmltopdf"]
 COPY --from=build ["/usr/lib/aarch64-linux-gnu/libjpeg.so.62", "/usr/lib/aarch64-linux-gnu/libjpeg.so.62"]
 COPY --from=build ["/usr/lib/aarch64-linux-gnu/libpng16.so.16", "/usr/lib/aarch64-linux-gnu/libpng16.so.16"]
@@ -56,7 +58,7 @@ COPY --from=build ["/usr/lib/aarch64-linux-gnu/libbsd.so.0", "/usr/lib/aarch64-l
 COPY --from=build ["/usr/lib/aarch64-linux-gnu/libmd.so.0", "/usr/lib/aarch64-linux-gnu/libmd.so.0"]
 COPY --from=build ["/lib/ld-linux-aarch64.so.1", "/lib/ld-linux-aarch64.so.1"]
 
-EXPOSE 8080
-USER nonroot:nonroot
+# EXPOSE 8080
+# USER nonroot:nonroot
 
 CMD ["/main"]

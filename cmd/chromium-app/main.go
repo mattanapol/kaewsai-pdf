@@ -8,8 +8,8 @@ import (
 	"github.com/mattanapol/kaewsai-pdf/internal/persistence/nosql_repos"
 
 	"github.com/mattanapol/kaewsai-pdf/internal/service/pdf_generator"
+	"github.com/mattanapol/kaewsai-pdf/internal/service/pdf_generator/chromium_generator"
 	"github.com/mattanapol/kaewsai-pdf/internal/service/pdf_generator/receiver"
-	"github.com/mattanapol/kaewsai-pdf/internal/service/pdf_generator/wkhtmltopdf_generator"
 	"github.com/mattanapol/kaewsai-pdf/internal/setting"
 	"go.uber.org/fx"
 )
@@ -17,8 +17,8 @@ import (
 func main() {
 	// Run server
 	app := fx.New(
-		wkhtmltopdf_generator.Module,
-		setting.WkhtmltopdfAppModule,
+		chromium_generator.Module,
+		setting.ChromiumAppModule,
 		nosql_repos.Module,
 		pdf_generator.Module,
 		receiver.Module,

@@ -1,19 +1,16 @@
-server:
-  run-mode: debug
-  http-port: 8080
-  read-timeout: 60
-  write-timeout: 60
-
 aws:
   region: "ap-southeast-1"
   access-key-id: ""
   secret-access-key: ""
 
-wk:
-  input-queue-url:
+s3:
+  bucket-name: "kaewsai-pdf"
 
-chromium:
-  input-queue-url:
+sqs:
+  input-queue-url: ""
+
+app:
+  output-path: "wkhtmltopdf-output"
 
 mongodb:
   user: admin

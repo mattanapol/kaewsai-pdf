@@ -1,0 +1,24 @@
+ARG GO_IMAGE=golang:1.20-bullseye
+##
+## Build
+##
+FROM ${GO_IMAGE} AS build
+    
+WORKDIR /app
+
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
+
+COPY ./cmd ./cmd
+COPY ./internal ./internal
+RUN go build -o /main ./cmd/chromium-app/
+COPY ./config /config
+
+FROM gotenberg/gotenberg:7.8
+
+COPY ./deployment/chromium-app-start.sh /home/gotenberg/chromium-app-start.sh
+COPY --from=build ["/main", "/home/gotenberg/"]
+COPY --from=build ["/config", "/home/gotenberg/config"]
+
+CMD ["/bin/bash", "/home/gotenberg/chromium-app-start.sh"]
