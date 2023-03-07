@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 
+	"github.com/mattanapol/kaewsai-pdf/internal/domain"
 	"github.com/mattanapol/kaewsai-pdf/internal/persistence/file_repos"
 	"github.com/mattanapol/kaewsai-pdf/internal/persistence/nosql_repos"
 
@@ -32,7 +33,7 @@ func main() {
 	app.Run()
 }
 
-func startApplication(lc fx.Lifecycle, pdfGeneratorReceiver pdf_generator.PdfGenerateRequestReceiver) {
+func startApplication(lc fx.Lifecycle, pdfGeneratorReceiver domain.PdfGenerateRequestReceiver) {
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			log.Println("Start Application ...")

@@ -6,7 +6,6 @@ import (
 	"fmt"
 
 	"github.com/mattanapol/kaewsai-pdf/internal/domain"
-	"github.com/mattanapol/kaewsai-pdf/internal/persistence/file_repos"
 
 	"github.com/google/uuid"
 	"github.com/mattanapol/kaewsai-pdf/internal/service/common"
@@ -15,21 +14,17 @@ import (
 
 type PdfGeneratorService struct {
 	pdfGeneratorSetting           setting.PdfGeneratorApp
-	pdfGenerator                  PdfGenerator
-	fileRepository                file_repos.FileRepository
+	pdfGenerator                  domain.PdfGenerator
+	fileRepository                domain.FileRepository
 	pdfGenerationRecordRepository domain.PdfGenerationRecordRepository
-}
-
-type PDfGeneratorServicer interface {
-	Generate(context context.Context, id uuid.UUID, url string, options *domain.PdfGenerateRequestOption) error
 }
 
 func NewPdfGeneratorService(
 	pdfGeneratorSetting setting.PdfGeneratorApp,
-	pdfGenerator PdfGenerator,
-	fileRepository file_repos.FileRepository,
+	pdfGenerator domain.PdfGenerator,
+	fileRepository domain.FileRepository,
 	pdfGenerationRecordRepository domain.PdfGenerationRecordRepository,
-) PDfGeneratorServicer {
+) domain.PDfGeneratorServicer {
 	return &PdfGeneratorService{pdfGeneratorSetting,
 		pdfGenerator,
 		fileRepository,
@@ -63,7 +58,7 @@ func (s *PdfGeneratorService) Generate(context context.Context, id uuid.UUID, ur
 	}
 
 	// Upload pdf
-	fileUploadRequest := file_repos.FileUploadRequest{
+	fileUploadRequest := domain.FileUploadRequest{
 		FileName: uuid.New().String() + common.PdfFileExtension,
 		FilePath: s.pdfGeneratorSetting.OutputPath,
 		File:     file,

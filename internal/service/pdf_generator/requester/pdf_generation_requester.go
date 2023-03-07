@@ -1,4 +1,4 @@
-package pdf_generator
+package requester
 
 import (
 	"context"

@@ -15,4 +15,5 @@ var Module = fx.Module("PdfGeneratorRequestService",
 	) domain.PdfGenerateRequester {
 		return NewPdfGenerateRequestService(sqsClient, apiConfiguration.Wk, apiConfiguration.Chromium)
 	}),
+	fx.Provide(NewPdfGenerationRequestService),
 )

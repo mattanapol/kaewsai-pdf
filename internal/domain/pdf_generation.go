@@ -48,25 +48,3 @@ type PdfGenerationRecordRepository interface {
 		pdfGenerationRecord *PdfGenerationRecord) (*PdfGenerationRecord, error)
 	FindById(context context.Context, id uuid.UUID) (*PdfGenerationRecord, error)
 }
-
-type PdfGenerateRequestForm struct {
-	Id      uuid.UUID
-	Url     string
-	Options PdfGenerateRequestOption
-}
-
-type PdfGenerateRequestOption struct {
-	Landscape *bool
-	Scale     *float32
-}
-
-type Generator string
-
-const (
-	Wkhtmltopdf Generator = "wkhtmltopdf"
-	Chromium    Generator = "chromium"
-)
-
-type PdfGenerateRequester interface {
-	Request(context context.Context, generator Generator, request PdfGenerateRequestForm) error
-}

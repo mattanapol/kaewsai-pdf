@@ -22,7 +22,7 @@ func SetupMongoDb(mongoDbSetting setting.MongoDb,
 		mongoDbSetting.Port,
 		mongoDbSetting.Name,
 	)
-	clientOpts := options.Client().ApplyURI(uri).SetMonitor(getMongoCommandMonitor(*log.Default()))
+	clientOpts := options.Client().ApplyURI(uri).SetMonitor(getMongoCommandMonitor(log.Default()))
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
@@ -46,7 +46,7 @@ func (m MongoConnection) Ping() error {
 	return m.client.Ping(context.TODO(), nil)
 }
 
-func getMongoCommandMonitor(logger log.Logger) *event.CommandMonitor {
+func getMongoCommandMonitor(logger *log.Logger) *event.CommandMonitor {
 	return &event.CommandMonitor{
 		Started: func(ctx context.Context, e *event.CommandStartedEvent) {
 			logger.Printf("command: %s", e.Command)

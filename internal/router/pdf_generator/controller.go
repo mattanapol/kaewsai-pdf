@@ -4,15 +4,15 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/sqs"
 	"github.com/gin-gonic/gin"
 	"github.com/mattanapol/kaewsai-pdf/internal/domain"
-	"github.com/mattanapol/kaewsai-pdf/internal/service/pdf_generator"
+	"github.com/mattanapol/kaewsai-pdf/internal/service/pdf_generator/requester"
 )
 
 type PdfGeneratorController struct {
-	pdfGeneratorRequester pdf_generator.PdfGenerationRequestServicer
+	pdfGeneratorRequester requester.PdfGenerationRequestServicer
 }
 
 // New pdf generator controller
-func NewPdfGeneratorController(pdfGeneratorRequester pdf_generator.PdfGenerationRequestServicer, sqsClient *sqs.Client) *PdfGeneratorController {
+func NewPdfGeneratorController(pdfGeneratorRequester requester.PdfGenerationRequestServicer, sqsClient *sqs.Client) *PdfGeneratorController {
 	return &PdfGeneratorController{
 		pdfGeneratorRequester: pdfGeneratorRequester,
 	}

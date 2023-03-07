@@ -1,11 +1,11 @@
 package pdf_generator
 
 import (
-	"github.com/mattanapol/kaewsai-pdf/internal/service/pdf_generator"
+	"github.com/mattanapol/kaewsai-pdf/internal/service/pdf_generator/requester"
 	"go.uber.org/fx"
 )
 
 var Module = fx.Module("PdfGeneratorControllers",
-	pdf_generator.RequestModule,
+	requester.Module,
 	fx.Provide(NewPdfGeneratorController),
 )

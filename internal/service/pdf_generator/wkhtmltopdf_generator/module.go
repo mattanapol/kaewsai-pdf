@@ -1,13 +1,12 @@
 package wkhtmltopdf_generator
 
 import (
-	"github.com/mattanapol/kaewsai-pdf/internal/persistence/file_repos"
-	"github.com/mattanapol/kaewsai-pdf/internal/service/pdf_generator"
+	"github.com/mattanapol/kaewsai-pdf/internal/domain"
 	"go.uber.org/fx"
 )
 
 var Module = fx.Module("WkhtmltopdfGenerator",
-	fx.Provide(func(fileRepository file_repos.FileRepository) pdf_generator.PdfGenerator {
+	fx.Provide(func(fileRepository domain.FileRepository) domain.PdfGenerator {
 		return NewWkhtmltopdfGenerator(fileRepository)
 	}),
 )

@@ -7,19 +7,18 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/service/sqs"
 	"github.com/mattanapol/kaewsai-pdf/internal/domain"
-	"github.com/mattanapol/kaewsai-pdf/internal/service/pdf_generator"
 	"github.com/mattanapol/kaewsai-pdf/internal/setting"
 )
 
 type PdfGenerateRequestReceiverService struct {
 	sqsClient           *sqs.Client
 	sqsSetting          setting.SQS
-	pdfGeneratorService pdf_generator.PDfGeneratorServicer
+	pdfGeneratorService domain.PDfGeneratorServicer
 }
 
 func NewPdfGenerateRequestReceiver(sqsClient *sqs.Client,
 	sqsSetting setting.SQS,
-	pdfGenerator pdf_generator.PDfGeneratorServicer) *PdfGenerateRequestReceiverService {
+	pdfGenerator domain.PDfGeneratorServicer) *PdfGenerateRequestReceiverService {
 	if sqsSetting.InputQueueUrl == "" {
 		log.Panicln("SQS input queue url is not set")
 	}

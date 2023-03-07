@@ -8,16 +8,15 @@ import (
 	"time"
 
 	"github.com/mattanapol/kaewsai-pdf/internal/domain"
-	"github.com/mattanapol/kaewsai-pdf/internal/persistence/file_repos"
 
 	"github.com/SebastiaanKlippert/go-wkhtmltopdf"
 )
 
 type WkhtmltopdfGenerator struct {
-	fileRepository file_repos.FileRepository
+	fileRepository domain.FileRepository
 }
 
-func NewWkhtmltopdfGenerator(fileRepository file_repos.FileRepository) WkhtmltopdfGenerator {
+func NewWkhtmltopdfGenerator(fileRepository domain.FileRepository) WkhtmltopdfGenerator {
 	return WkhtmltopdfGenerator{
 		fileRepository: fileRepository,
 	}

@@ -9,6 +9,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
+	"github.com/mattanapol/kaewsai-pdf/internal/domain"
 	"github.com/mattanapol/kaewsai-pdf/internal/setting"
 )
 
@@ -26,8 +27,8 @@ func NewS3Repository(s3Client *s3.Client, s3Setting setting.S3) *S3Repository {
 }
 
 func (r *S3Repository) UploadFile(context context.Context,
-	fileUploadRequest FileUploadRequest,
-) (*FileUploadResponse, error) {
+	fileUploadRequest domain.FileUploadRequest,
+) (*domain.FileUploadResponse, error) {
 	filePath := filepath.Join(fileUploadRequest.FilePath, fileUploadRequest.FileName)
 	log.Printf("Uploading file to S3 bucket: %s, File: %s",
 		r.s3Setting.BucketName,
@@ -46,7 +47,7 @@ func (r *S3Repository) UploadFile(context context.Context,
 		return nil, err
 	}
 
-	return &FileUploadResponse{
+	return &domain.FileUploadResponse{
 		DriveName: r.s3Setting.BucketName,
 		FilePath:  filePath,
 	}, nil

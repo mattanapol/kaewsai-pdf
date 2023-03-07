@@ -5,7 +5,6 @@ all: api wk chromium
 run-all:
 	docker compose -f ./deployment/docker-compose.yml up -d --build
 
-
 wk: docker-build-wk
 
 docker-build-wk:
@@ -29,3 +28,9 @@ docker-build-chromium:
 
 docker-run-chromium:
 	docker run -d --env-file ./.env-chromium kaewsai-chromium-app
+
+plot-dependency:
+	docker build -t gen-diagram -f ./script/Dockerfile.diagram .
+	docker run -v $(PWD):/app gen-diagram -s -novendor -o github.com/mattanapol,./cmd ./cmd/api | dot -Tpng -o ./docs/diagrams/api.png
+	docker run -v $(PWD):/app gen-diagram -s -novendor -o github.com/mattanapol,./cmd ./cmd/chromium-app | dot -Tpng -o ./docs/diagrams/chromium-app.png
+	docker run -v $(PWD):/app gen-diagram -s -novendor -o github.com/mattanapol,./cmd ./cmd/wkhtmltopdf-app | dot -Tpng -o ./docs/diagrams/wkhtmltopdf-app.png

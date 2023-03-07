@@ -8,7 +8,6 @@ import (
 	"log"
 
 	"github.com/mattanapol/kaewsai-pdf/internal/domain"
-	"github.com/mattanapol/kaewsai-pdf/internal/persistence/file_repos"
 
 	"github.com/go-resty/resty/v2"
 )
@@ -16,10 +15,10 @@ import (
 const chromiumUrl = "http://localhost:3000/forms/chromium/convert/url"
 
 type ChromiumGenerator struct {
-	fileRepository file_repos.FileRepository
+	fileRepository domain.FileRepository
 }
 
-func NewChromiumGenerator(fileRepository file_repos.FileRepository) ChromiumGenerator {
+func NewChromiumGenerator(fileRepository domain.FileRepository) ChromiumGenerator {
 	return ChromiumGenerator{
 		fileRepository: fileRepository,
 	}
